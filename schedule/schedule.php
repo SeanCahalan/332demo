@@ -11,6 +11,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+        <link rel="stylesheet" href="/332demo/css/style.css" />
     </head>
     <body>
     <div id="tabs">
@@ -19,9 +20,14 @@
                 <li><a href="/332demo/committee/committee.php">Committees</a></li>
                 <li><a href="/332demo/attendee/attendee.php">Attendees</a></li>
                 <li><a href="/332demo/sponsor/sponsor.php">Sponsors</a></li>
-                <li><a href="/332demo/schedule/schedule.php">Schedule</a></li>
+                <li class="active"><a href="/332demo/schedule/schedule.php">Schedule</a></li>
             </ul>
         </div>
+
+    <div class="content">
+
+
+    </div>
 
     <script type="text/javascript" src="/332demo/index.js"></script>
 
