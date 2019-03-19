@@ -1,10 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>332 Conference DB</title>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"/> -->
+
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    
+    </head>
+    <body>
+        <div id="tabs">
+            <ul>
+                <li><a href="/332demo/info/info.php">Info</a></li>
+                <li><a href="/332demo/committee/committee.php">Committees</a></li>
+                <li><a href="/332demo/attendee/attendee.php">Attendees</a></li>
+                <li><a href="/332demo/sponsor/sponser.php">Sponsors</a></li>
+                <li><a href="/332demo/schedule/schedule.php">Schedule</a></li>
+            </ul>
+        </div>
+
 <?php
-$_POST = json_decode(file_get_contents('php://input'), true);
 include '../util/DBController.php';
+include '../util/PrintTable.php';
 $db_handle = new DBController();
 $names = $db_handle->runQuery("SELECT DISTINCT name FROM subcommittees ORDER BY name ASC");
 ?>
-<form method="POST" action="/332demo/index.php#tabs-2" name="search">
+<form method="POST" action="/332demo/committee/committee.php" name="search">
     <div class="search-box">
         <select id="Place" name="subcommittee">
             <option value="0">Select Subcommittees</option>
@@ -29,41 +55,28 @@ $names = $db_handle->runQuery("SELECT DISTINCT name FROM subcommittees ORDER BY 
     <?php
         if (! empty($_POST['subcommittee'])) {
             ?>
-            <table cellpadding="10" cellspacing="1">
-
-        <thead>
-            <tr>
-                <th><strong>Name</strong></th>
-                <th><strong>Gender</strong></th>
-                <th><strong>Country</strong></th>
-            </tr>
-        </thead>
-        <tbody>
         <?php
             $query = "SELECT cm.fname, cm.lname, icno.name
             FROM (committee_members cm 
             INNER JOIN is_committee_member_of icno ON cm.id = icno.id)";
        
-            $query = $query . " WHERE icno.name in (" . $_POST['subcommittee'] . ")";
-            
+            $query = $query . " WHERE icno.name IN ('" . $_POST['subcommittee'] . "')";
+            //echo $query;
             $result = $db_handle->runQuery($query);
         }
         if (! empty($result)) {
-            foreach ($result as $key => $value) {
-                ?>
-        <tr>
-                <td><div class="col" id="user_data_1"><?php echo $result[$key]['fname']; ?></div></td>
-                <td><div class="col" id="user_data_2"><?php echo $result[$key]['lname']; ?> </div></td>
-            </tr>
-        <?php
-            }
+            printTable(["First name", "Last name", "Subcommittee"], $result)
             ?>
             
-        </tbody>
-    </table>
+  
     <?php
         }
         ?>
 
 </form>
+
+<script type="text/javascript" src="/332demo/index.js"></script>
+
+</body>
+</html>
 
