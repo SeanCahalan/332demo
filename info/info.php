@@ -18,7 +18,7 @@
                 <li><a href="/332demo/info/info.php">Info</a></li>
                 <li><a href="/332demo/committee/committee.php">Committees</a></li>
                 <li><a href="/332demo/attendee/attendee.php">Attendees</a></li>
-                <li><a href="/332demo/sponsor/sponser.php">Sponsors</a></li>
+                <li><a href="/332demo/sponsor/sponsor.php">Sponsors</a></li>
                 <li><a href="/332demo/schedule/schedule.php">Schedule</a></li>
             </ul>
         </div>
