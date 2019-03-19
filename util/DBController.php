@@ -13,6 +13,10 @@ class DBController {
 	$conn = new PDO("mysql:host=$this->host;dbname=$this->dbname", $this->username);
         return $conn;
     }
+
+    function exec($query){
+	$this->conn->exec($query);
+    }
     
     function runQuery($query) {
 	$statement = $this->conn->prepare($query);
