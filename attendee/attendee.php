@@ -35,14 +35,17 @@
     $db_handle = new DBController();
 
     $sort = "all";
+    if(isset($_GET['sort'])){
+        $sort = $_GET["sort"];
+    }
     if(isset($_POST['sort'])){
         $sort = $_POST["sort"];
-        echo $sort;
     }
+    
 
-    $room = NULL;
+    $room = 'all';
     if(isset($_POST['room'])){
-        $sort = $_POST["room"];
+        $room = $_POST["room"];
     }
     
 ?>
@@ -55,6 +58,27 @@
         <option <?php if($sort=='sponsor'){?>selected="selected"<?php }?> value="sponsor">Sponsor</option>
     </select>
 </form>
+
+<?php if($sort == "student"){ 
+?>
+    <form method="post" action="/332demo/attendee/attendee.php?sort=student">
+        <select name="room" onchange="this.form.submit()">
+            <option <?php if(! is_numeric($room)){?>selected="selected"<?php }?> value="all">All</option>
+            <?php 
+                $rooms = $db_handle->runQuery("SELECT room_number FROM hotel_rooms WHERE hotel_rooms.beds < 4");
+                foreach($rooms as $number){
+                    if($room==$number["room_number"]){
+                        echo '<option selected="selected" value="'.$number["room_number"].'">';
+                    } else {
+                        echo '<option value="'.$number["room_number"].'">';
+                    }
+                    echo $number["room_number"];
+                    echo "</option>";
+                }
+            ?>
+        </select>
+    </form>
+<?php } ?>
 
 
 <button id="student" type="button" class="btn btn-primary" onclick="addAttendee('student')">
@@ -87,9 +111,6 @@
                     <label id="first">Last name:</label><br/>
                     <input type="text" name="lname"><br/>
 
-                    <label id="first">Price:</label><br/>
-                    <input type="number" name="price"><br/>
-
                     <div id="additional_attendee_form"></div>
 
                     <button type="submit" name="save">save</button>
@@ -112,11 +133,15 @@
             echo "Error: " . $e->getMessage();
         }
     } elseif($sort == "student") {
+        
         try {
             $sql = "SELECT attendee.id, attendee.fname, attendee.lname, student.room_number
             FROM ((attendee 
             INNER JOIN student ON attendee.id = student.id)
             LEFT JOIN hotel_rooms ON student.room_number = hotel_rooms.room_number)";
+            if(is_numeric($room)){
+                $sql = $sql . " WHERE student.room_number = " . $room;
+            }
             $result = $db_handle->runQuery($sql);
             printTable(['ID', 'First name', 'Last name', '<a>Room number</a>'], $result);
         }

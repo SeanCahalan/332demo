@@ -1,7 +1,7 @@
 <div>
 <label id="first">Room Number</label><br/>
 <select type="text" name="room">
-    <option>no selection</option>
+    <option value="">no selection</option>
     <?php 
         include '../util/DBController.php';
         $db_handle = new DBController();
