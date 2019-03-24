@@ -33,7 +33,29 @@
 <?php 
     include '../util/DBController.php';
     $db_handle = new DBController();
+
+    $sort = "all";
+    if(isset($_POST['sort'])){
+        $sort = $_POST["sort"];
+        echo $sort;
+    }
+
+    $room = NULL;
+    if(isset($_POST['room'])){
+        $sort = $_POST["room"];
+    }
+    
 ?>
+
+<form method="post" action="/332demo/attendee/attendee.php">
+    <select name="sort" onchange="this.form.submit()">
+        <option <?php if($sort=='all'){?>selected="selected"<?php }?> value="all">All</option>
+        <option <?php if($sort=='student'){?>selected="selected"<?php }?> value="student">Student</option>
+        <option <?php if($sort=='professional'){?>selected="selected"<?php }?> value="professional">Professional</option>
+        <option <?php if($sort=='sponsor'){?>selected="selected"<?php }?> value="sponsor">Sponsor</option>
+    </select>
+</form>
+
 
 <button id="student" type="button" class="btn btn-primary" onclick="addAttendee('student')">
     Add Student
@@ -80,38 +102,47 @@
 <?php
     require_once('../util/PrintTable.php');
 
-    try {
-        $sql = "SELECT attendee.id, attendee.fname, attendee.lname, student.room_number
-        FROM ((attendee 
-        INNER JOIN student ON attendee.id = student.id)
-        LEFT JOIN hotel_rooms ON student.room_number = hotel_rooms.room_number)";
-        $result = $db_handle->runQuery($sql);
-        printTable(['ID', 'First name', 'Last name', '<a>Room number</a>'], $result);
-    }
-    catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
+    if($sort == "all"){
+        try {
+            $sql = "SELECT id, fname, lname FROM attendee";
+            $result = $db_handle->runQuery($sql);
+            printTable(['ID', 'First name', 'Last name'], $result);
+        }
+        catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    } elseif($sort == "student") {
+        try {
+            $sql = "SELECT attendee.id, attendee.fname, attendee.lname, student.room_number
+            FROM ((attendee 
+            INNER JOIN student ON attendee.id = student.id)
+            LEFT JOIN hotel_rooms ON student.room_number = hotel_rooms.room_number)";
+            $result = $db_handle->runQuery($sql);
+            printTable(['ID', 'First name', 'Last name', '<a>Room number</a>'], $result);
+        }
+        catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    } elseif($sort == "professional"){
+        try {
+            $sql = "SELECT id, fname, lname FROM attendee WHERE id in (SELECT id from professional)";
+            $result = $db_handle->runQuery($sql);
+            printTable(['ID', 'First name', 'Last name'], $result);
+        }
+        catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    } elseif($sort == "sponsor"){
+        try {
+            $sql = "SELECT id, fname, lname FROM attendee WHERE id in (SELECT id from sponsor)";
+            $result = $db_handle->runQuery($sql);
+            printTable(['ID', 'First name', 'Last name'], $result);
+        }
+        catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 
-    try {
-        $sql = "SELECT id, fname, lname FROM attendee WHERE id in (SELECT id from professional)";
-        $result = $db_handle->runQuery($sql);
-        printTable(['ID', 'First name', 'Last name'], $result);
-    }
-    catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
-
-    try {
-        $sql = "SELECT id, fname, lname FROM attendee WHERE id in (SELECT id from sponsor)";
-        $result = $db_handle->runQuery($sql);
-        printTable(['ID', 'First name', 'Last name'], $result);
-    }
-    catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
-
-
-    $conn = null;
 ?>
 
 </div>

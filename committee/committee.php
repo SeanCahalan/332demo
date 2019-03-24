@@ -26,37 +26,45 @@
         <div class="content">
 
 <?php
-include '../util/DBController.php';
-include '../util/PrintTable.php';
-$db_handle = new DBController();
-$names = $db_handle->runQuery("SELECT DISTINCT name FROM subcommittees ORDER BY name ASC");
+    include '../util/DBController.php';
+    include '../util/PrintTable.php';
+    $db_handle = new DBController();
+    $names = $db_handle->runQuery("SELECT DISTINCT name FROM subcommittees ORDER BY name ASC");
+
+    $selection = "all";
+    if (isset($_POST['subcommittee'])) {
+        $selection = $_POST['subcommittee'];
+    }
 ?>
+
+
 <form method="POST" action="/332demo/committee/committee.php" name="search">
     <div class="search-box">
-        <select id="Place" name="subcommittee">
-            <option value="0">Select Subcommittees</option>
+        <select id="Place" name="subcommittee" onchange="this.form.submit()">
+            <option <?php if($selection=='all'){?>selected="selected"<?php }?> value="all">All</option>
             <?php
                 if (! empty($names)) {
                     foreach ($names as $key => $value) {
-                        echo '<option value="' . $names[$key]['name'] . '">' . $names[$key]['name'] . '</option>';
+                        if($selection==$names[$key]['name']){
+                            echo '<option selected="selected" value="' . $names[$key]['name'] . '">' . $names[$key]['name'] . '</option>';
+                        } else {
+                            echo '<option value="' . $names[$key]['name'] . '">' . $names[$key]['name'] . '</option>';
+                        }
                     }
                 }
             ?>
         </select>
-        <button id="Filter">Search</button>
     </div>
-
-    <?php 
-        if (isset($_POST['subcommittee'])) {
-            echo $_POST['subcommittee'];
-        }
-    ?>
   
+</form>
 
-    <?php
-        if (! empty($_POST['subcommittee'])) {
-            ?>
-        <?php
+<?php
+        if($selection == "all"){
+            $query = "SELECT cm.fname, cm.lname, icno.name
+            FROM (committee_members cm 
+            INNER JOIN is_committee_member_of icno ON cm.id = icno.id)";
+            $result = $db_handle->runQuery($query);
+        } else {
             $query = "SELECT cm.fname, cm.lname, icno.name
             FROM (committee_members cm 
             INNER JOIN is_committee_member_of icno ON cm.id = icno.id)";
@@ -65,16 +73,11 @@ $names = $db_handle->runQuery("SELECT DISTINCT name FROM subcommittees ORDER BY 
             //echo $query;
             $result = $db_handle->runQuery($query);
         }
-        if (! empty($result)) {
-            printTable(["First name", "Last name", "Subcommittee"], $result)
-            ?>
-            
-  
-    <?php
-        }
-        ?>
 
-</form>
+        if (! empty($result)) {
+            printTable(["First name", "Last name", "Subcommittee"], $result);
+        }
+    ?>
 
 </div>
 <script type="text/javascript" src="/332demo/index.js"></script>
