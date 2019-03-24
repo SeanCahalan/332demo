@@ -52,3 +52,7 @@ body >.content{
     -webkit-box-shadow: 0 0 10px #ddd;
         box-shadow: 0 0 10px #ddd;
 }
+
+table{
+    margin-top: 16px;
+}
