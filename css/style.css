@@ -54,5 +54,11 @@ body >.content{
 }
 
 table{
+    border: 1px solid black;
     margin-top: 16px;
+}
+
+td{
+    border: 1px solid black;
+    padding: 5px;
 }
