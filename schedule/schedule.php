@@ -26,6 +26,22 @@
 
     <div class="content">
 
+    <?php
+        include '../util/DBController.php';
+        $db_handle = new DBController();
+        require_once('../util/PrintTable.php');
+            try {
+                $sql = "SELECT name, room, start_time, end_time FROM session";
+                $result = $db_handle->runQuery($sql);
+                printTable(['Event Name', 'Room Number', 'Start Time', 'End Time'], $result);
+            }
+            catch(PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+    ?>
+
+
+
 
     </div>
 
