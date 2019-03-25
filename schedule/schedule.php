@@ -26,10 +26,48 @@
 
     <div class="content">
 
-    <?php
+    <?php 
         include '../util/DBController.php';
         $db_handle = new DBController();
+
+        try {
+            $sql = "SELECT DISTINCT cast(start_time as date) AS day FROM session";
+            $result = $db_handle->runQuery($sql);
+        }
+        catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+
+        $sort = "all";
+        if(isset($_GET['sort'])){
+            $sort = $_GET["sort"];
+        }
+        if(isset($_POST['sort'])){
+            $sort = $_POST["sort"];
+        }
+
+    ?>
+
+    <form method="post" action="/332demo/schedule/schedule.php">
+        <select name="sort" onchange="this.form.submit()">
+            <option <?php if($sort=='all'){?>selected="selected"<?php }?> value="all">All</option>
+            <?php
+                foreach ($result as $row){
+                    //echo '<option value="'.$row['day'].'">'.$row['day'].'</option>';
+                    $option = '<option ';
+                    if($sort==$row['day']){ 
+                        $option.= 'selected="selected" ';
+                    }
+                    $option .= 'value="'.$row['day'].'">'.$row['day'].'</option>';
+                    echo $option;
+                }
+            ?>
+        </select>
+    </form> 
+
+    <?php
         require_once('../util/PrintTable.php');
+        if($sort == "all"){
             try {
                 $sql = "SELECT name, room, start_time, end_time FROM session";
                 $result = $db_handle->runQuery($sql);
@@ -38,6 +76,16 @@
             catch(PDOException $e) {
                 echo "Error: " . $e->getMessage();
             }
+        } else{
+            try {
+                $sql = "SELECT name, room, start_time, end_time FROM session WHERE cast(start_time as date) = '" . $sort . "'";
+                $result = $db_handle->runQuery($sql);
+                printTable(['Event Name', 'Room Number', 'Start Time', 'End Time'], $result);
+            }
+            catch(PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
     ?>
 
 
