@@ -40,6 +40,7 @@
             }
         ?>
 
+        Sort Sponsorship by Company: 
         <!-- Drop down menu to filter companies -->
         <form method="post" action="/332demo/sponsor/sponsor.php">
             <select name="selected_company" onchange="this.form.submit()">
@@ -64,6 +65,48 @@
             }
             $result = $db_handle->runQuery($sql);
             printTable(['Company Name', 'Sponsorship'], $result);
+        ?>
+
+        <br>
+        <!-- Job board listings -->
+        <?php 
+            // default selection shows all jobs
+            $sel_job_comp = "*";
+            if(isset($_GET['sel_job_comp'])){
+                $sel_job_comp = $_GET["sel_job_comp"];
+            }
+            else if(isset($_POST['sel_job_comp'])){
+                $sel_job_comp = $_POST["sel_job_comp"];
+            }
+        ?>
+
+        <!-- Drop down menu to filter companies -->
+        Sort Job Listings by Company: 
+        <form method="post" action="/332demo/sponsor/sponsor.php">
+            <select name="sel_job_comp" onchange="this.form.submit()">
+                <?php 
+                    $companies = $db_handle->runQuery("SELECT company_name, class FROM sponsor_company;");
+                    // Default ALL option
+                    echo "<option selected='selected' value='*'>All Companies</option>\n";
+                    foreach ($companies as $company) {
+                        $is_selected = ($sel_job_comp==$company['company_name']) ? "selected='selected' " : "";
+                        echo "<option ".$is_selected."value='${company['company_name']}'> ${company['company_name']} </option>\n";
+                    }
+                ?>
+            </select>
+        </form>
+
+        <!-- Display a table of job listings -->
+        <?php 
+            require_once('../util/PrintTable.php');
+            if ($sel_job_comp == "*") {
+                $sql = "SELECT * FROM advertisement";
+            } else {
+                $sql = "SELECT * FROM advertisement WHERE company_name='${sel_job_comp}'";
+            }
+            $result = $db_handle->runQuery($sql);
+
+            printTable(['Job Title', 'Company', 'City', 'Province', 'Pay' ], $result);
         ?>
 
         </div> <!-- End Content -->
