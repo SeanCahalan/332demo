@@ -25,8 +25,48 @@
         </div>
 
         <div class="content">
+        <!-- Initialize the database connection -->
+        <?php 
+            include '../util/DBController.php';
+            $db_handle = new DBController();
 
-        </div>
+            // default selection shows all jobs
+            $selected_company = "*";
+            if(isset($_GET['selected_company'])){
+                $selected_company = $_GET["selected_company"];
+            }
+            else if(isset($_POST['selected_company'])){
+                $selected_company = $_POST["selected_company"];
+            }
+        ?>
+
+        <!-- Drop down menu to filter companies -->
+        <form method="post" action="/332demo/sponsor/sponsor.php">
+            <select name="selected_company" onchange="this.form.submit()">
+                <?php 
+                    $companies = $db_handle->runQuery("SELECT company_name, class FROM sponsor_company;");
+                    // Default ALL option
+                    echo "<option selected='selected' value='*'>All Companies</option>\n";
+                    foreach ($companies as $company) {
+                        $is_selected = ($selected_company==$company['company_name']) ? "selected='selected' " : "";
+                        echo "<option ".$is_selected."value='${company['company_name']}'> ${company['company_name']} </option>\n";
+                    }
+                ?>
+            </select>
+        </form>
+
+        <?php 
+            require_once('../util/PrintTable.php');
+            if ($selected_company == "*") {
+                $sql = "SELECT company_name, class FROM sponsor_company";
+            } else {
+                $sql = "SELECT company_name, class FROM sponsor_company WHERE company_name='${selected_company}'";
+            }
+            $result = $db_handle->runQuery($sql);
+            printTable(['Company Name', 'Sponsorship'], $result);
+        ?>
+
+        </div> <!-- End Content -->
 
         <script type="text/javascript" src="/332demo/index.js"></script>
 
