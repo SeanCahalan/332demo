@@ -33,7 +33,7 @@ INSERT INTO sponsor_company VALUES
 ('Google', 3, 'Platinum'), 
 ('Microsoft', 1, 'Gold'), 
 ('Oracle', 2, 'Silver'), 
-('Tencent', 0, 'PLatinum');
+('Tencent', 0, 'Platinum');
 
 INSERT INTO attendee (fname, lname, price) VALUES 
 ('Bill', 'Gates', 0), 
@@ -54,12 +54,6 @@ INSERT INTO committee_members (fname, lname) VALUES
 INSERT INTO subcommittees (name, chair) VALUES
 ('Program Committee', 1), 
 ('Registration Committee', 3);
-
-INSERT INTO is_committee_member_of (id, name) VALUES
-(1, 'Program Committee'), 
-(2, 'Program Committee'),
-(3, 'Registration Committee'),
-(4, 'Registration Committee');
 
 INSERT INTO is_committee_member_of (id, name) VALUES
 (1, 'Program Committee'), 

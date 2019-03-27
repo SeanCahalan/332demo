@@ -18,12 +18,11 @@ CREATE TABLE `sponsor_company` (
 
 CREATE TABLE `advertisement` (
 	`job_title` VARCHAR(50) NOT NULL,
-	`company_name` VARCHAR(30) NOT NULL,
+	`company_name` VARCHAR(30),
 	`city` VARCHAR(30),
 	`province` CHAR(2),
 	`pay` INT,
-	PRIMARY KEY (`job_title`, `company_name`),
-	FOREIGN KEY (`company_name`) REFERENCES sponsor_company(`company_name`) on delete cascade
+	PRIMARY KEY (`job_title`, `company_name`)
 );
 
 CREATE TABLE `attendee` (
@@ -44,22 +43,22 @@ CREATE TABLE `student` (
 	`id` INT NOT NULL,
 	`room_number` INT,
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`id`) REFERENCES attendee(`id`),
+	FOREIGN KEY (`id`) REFERENCES attendee(`id`) ON UPDATE CASCADE,
 	FOREIGN KEY (`room_number`) REFERENCES hotel_rooms(`room_number`)
 );
 
 CREATE TABLE `professional` (
 	`id` INT NOT NULL,
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`id`) REFERENCES attendee(`id`)
+	FOREIGN KEY (`id`) REFERENCES attendee(`id`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `sponsor` (
 	`id` INT NOT NULL,
 	`company_name` VARCHAR(30) NOT NULL,
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`id`) REFERENCES attendee(`id`),
-	FOREIGN KEY (`company_name`) REFERENCES sponsor_company(`company_name`)
+	FOREIGN KEY (`id`) REFERENCES attendee(`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (`company_name`) REFERENCES sponsor_company(`company_name`) ON UPDATE CASCADE ON DELETE CASCADE  
 );
 
 CREATE TABLE `session` (
@@ -76,9 +75,9 @@ CREATE TABLE `is_spoken_by` (
 	`room` INT NOT NULL,
 	`start_time` DATETIME NOT NULL,
 	PRIMARY KEY (`room`, `start_time`, `speaker_id`), 
-	FOREIGN KEY (`speaker_id`) REFERENCES attendee(`id`),
-	FOREIGN KEY (`room`) REFERENCES session(`room`),
-	FOREIGN KEY (`start_time`) REFERENCES session(`start_time`)
+	FOREIGN KEY (`speaker_id`) REFERENCES attendee(`id`) ON UPDATE CASCADE,
+	FOREIGN KEY (`room`) REFERENCES session(`room`) ON UPDATE CASCADE,
+	FOREIGN KEY (`start_time`) REFERENCES session(`start_time`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `committee_members` (
