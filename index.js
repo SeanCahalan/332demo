@@ -43,3 +43,32 @@ var addAttendee = function(attendee_type){
     }
     $('#add_attendee').modal('show');
 }
+
+
+var editSchedule = function(room, startTime, endTime){
+    console.log("show schedule modal");
+    var $form = $('#edit_schedule_form'); // id of the div where stuff gets inserted
+    $form.empty();
+        $.post(`/332demo/schedule/edit_form.php`, {room: room, start_time: startTime, end_time: endTime}, function(html){
+            $form.html(html).show();
+        })
+    $('#edit_schedule').modal('show'); //id of the modal
+}
+
+//modal id = edit_schedule
+
+
+//.innerhtml = 
+
+// put the whole `/332demo/schedule/edit_form.php`
+
+// things in curly braces accesable by script
+
+//look up jquery set the value of an input
+// or php get post data from jquery 
+
+
+// $form.html(html).show(); call div editform
+
+
+
