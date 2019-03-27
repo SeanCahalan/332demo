@@ -44,7 +44,6 @@ var addAttendee = function(attendee_type){
     $('#add_attendee').modal('show');
 }
 
-
 var editSchedule = function(room, startTime, endTime){
     console.log("show schedule modal");
     var $form = $('#edit_schedule_form'); // id of the div where stuff gets inserted
@@ -69,6 +68,3 @@ var editSchedule = function(room, startTime, endTime){
 
 
 // $form.html(html).show(); call div editform
-
-
-
