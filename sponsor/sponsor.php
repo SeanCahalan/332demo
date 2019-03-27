@@ -152,8 +152,8 @@
             }
         ?>
 
+        <h3>Job Listings</h3>
         <!-- Drop down menu to filter companies -->
-        Sort Job Listings by Company: 
         <form method="post" action="/332demo/sponsor/sponsor.php">
             <select name="sel_job_comp" onchange="this.form.submit()">
                 <?php 
