@@ -50,50 +50,66 @@
     
 ?>
 
-<p>Sort attendees by type:</p>
 <form method="post" action="/332demo/attendee/attendee.php">
-    <select name="sort" onchange="this.form.submit()">
-        <option <?php if($sort=='all'){?>selected="selected"<?php }?> value="all">All</option>
-        <option <?php if($sort=='student'){?>selected="selected"<?php }?> value="student">Student</option>
-        <option <?php if($sort=='professional'){?>selected="selected"<?php }?> value="professional">Professional</option>
-        <option <?php if($sort=='sponsor'){?>selected="selected"<?php }?> value="sponsor">Sponsor</option>
-    </select>
+    <div class="input-group mb-3" style="width: 320px;">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Sort attendees by type</span>
+        </div>
+        <select name="sort" onchange="this.form.submit()" class="custom-select">
+            <option <?php if($sort=='all'){?>selected="selected"<?php }?> value="all">All</option>
+            <option <?php if($sort=='student'){?>selected="selected"<?php }?> value="student">Student</option>
+            <option <?php if($sort=='professional'){?>selected="selected"<?php }?> value="professional">Professional</option>
+            <option <?php if($sort=='sponsor'){?>selected="selected"<?php }?> value="sponsor">Sponsor</option>
+        </select>
+    </div> 
 </form>
 
 <?php if($sort == "student"){ 
 ?>
-    <p>Sort students by hotel room:</p>
     <form method="post" action="/332demo/attendee/attendee.php?sort=student">
-        <select name="room" onchange="this.form.submit()">
-            <option <?php if(! is_numeric($room)){?>selected="selected"<?php }?> value="all">All</option>
-            <?php 
-                $rooms = $db_handle->runQuery("SELECT room_number FROM hotel_rooms");
-                foreach($rooms as $number){
-                    if($room==$number["room_number"]){
-                        echo '<option selected="selected" value="'.$number["room_number"].'">';
-                    } else {
-                        echo '<option value="'.$number["room_number"].'">';
+        <div class="input-group mb-3" style="width: 320px;">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Sort students by hotel room</span>
+            </div>
+            <select name="room" onchange="this.form.submit()" class="custom-select">
+                <option <?php if(! is_numeric($room)){?>selected="selected"<?php }?> value="all">All</option>
+                <?php 
+                    $rooms = $db_handle->runQuery("SELECT room_number FROM hotel_rooms");
+                    foreach($rooms as $number){
+                        if($room==$number["room_number"]){
+                            echo '<option selected="selected" value="'.$number["room_number"].'">';
+                        } else {
+                            echo '<option value="'.$number["room_number"].'">';
+                        }
+                        echo $number["room_number"];
+                        echo "</option>";
                     }
-                    echo $number["room_number"];
-                    echo "</option>";
-                }
-            ?>
-        </select>
+                ?>
+            </select>
+        </div> 
     </form>
 <?php } ?>
 
+<?php if($sort == "student" || $sort == "all"){ 
+?>
+    <button id="student" type="button" class="btn btn-primary" onclick="addAttendee('student')">
+        Add Student
+    </button>
+<?php } ?>
 
-<button id="student" type="button" class="btn btn-primary" onclick="addAttendee('student')">
-    Add Student
-</button>
+<?php if($sort == "professional" || $sort == "all"){ 
+?>
+    <button id="professional" type="button" class="btn btn-primary" onclick="addAttendee('professional')">
+        Add Professional
+    </button>
+<?php } ?>
 
-<button id="professional" type="button" class="btn btn-primary" onclick="addAttendee('professional')">
-    Add Professional
-</button>
-
-<button id="sponsor" type="button" class="btn btn-primary" onclick="addAttendee('sponsor')">
-    Add Sponsor
-</button>
+<?php if($sort == "sponsor" || $sort == "all"){ 
+?>
+    <button id="sponsor" type="button" class="btn btn-primary" onclick="addAttendee('sponsor')">
+        Add Sponsor
+    </button>
+<?php } ?>
 
 <div class="modal fade" id="add_attendee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -107,15 +123,24 @@
             <div class="modal-body">
 
                 <form method="post" action="/332demo/attendee/insertAttendee.php"> 
-                    <label id="first"> First name:</label><br/>
-                    <input type="text" name="fname"><br/>
 
-                    <label id="first">Last name:</label><br/>
-                    <input type="text" name="lname"><br/>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">First name</span>
+                        </div>
+                        <input type="text" class="form-control" name="fname">
+                    </div>
+              
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Last name</span>
+                        </div>
+                        <input type="text" class="form-control" name="lname">
+                    </div>
 
                     <div id="additional_attendee_form"></div>
 
-                    <button type="submit" name="save">save</button>
+                    <button type="submit" name="save" class="btn btn-primary">save</button>
                 </form>
             </div>
         </div>

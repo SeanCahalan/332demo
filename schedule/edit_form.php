@@ -23,12 +23,24 @@ $_SESSION['current_start'] = $current_start;
 ?>
 
 <div>
-    <label id="startTime"> Start Time:</label><br />
-    <input type="text" name="startTime" <?php echo 'value="' . $current_start . '"' ?>><br />
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Start time</span>
+        </div>
+        <input type="text" class="form-control" name="startTime" <?php echo 'value="' . $current_start . '"' ?>>
+    </div>
 
-    <label id="endTime">End Time:</label><br />
-    <input type="text" name="endTime" <?php echo 'value="' . $current_end . '"' ?>><br />
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">End time</span>
+        </div>
+        <input type="text" class="form-control" name="endTime" <?php echo 'value="' . $current_end . '"' ?>>
+    </div>
 
-    <label id="room">Room Number:</label><br />
-    <input type="text" name="room" <?php echo 'value="' . $current_room . '"' ?>><br />
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Room number</span>
+        </div>
+        <input type="text" class="form-control" name="room" <?php echo 'value="' . $current_room . '"' ?>>
+    </div>
 </div> 

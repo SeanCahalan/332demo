@@ -60,16 +60,28 @@
                     <div class="modal-body">
 
                         <form method="post" action="/332demo/sponsor/sponsorTransaction.php"> 
-                            <label id="prompt_1"> Company name:</label><br/>
-                            <input type="text" name="company_name"><br/>
-                            <label id="prompt_2"> Sponsor Type:</label><br/>
-                            <select name="sponsor_type">
-                                <option value='Silver'>Silver</option>
-                                <option value='Gold'>Gold</option>
-                                <option value='Platinum'>Platinum</option>
-                            </select><br/>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Company name</span>
+                                </div>
+                                <input type="text" class="form-control" name="company_name">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Sponsor type</span>
+                                </div>
+                                <select name="sponsor_type" class="custom-select">
+                                    <option value='Bronze'>Bronze</option>
+                                    <option value='Silver'>Silver</option>
+                                    <option value='Gold'>Gold</option>
+                                    <option value='Platinum'>Platinum</option>
+                                </select>
+                            </div>
+
                             <input type="hidden" name="transaction_type" value='add'>
-                            <button type="submit" name="save">save</button>
+                            <button type="submit" name="save" class="btn btn-primary">save</button>
                         </form>
                     </div>
                 </div>
@@ -78,7 +90,7 @@
 
 
         <!-- Delete a Sponsor -->
-        <button id="professional" type="button" class="btn btn-primary" data-toggle="modal" data-target="#sponsor_modal_del">
+        <button id="professional" type="button" class="btn btn-danger" data-toggle="modal" data-target="#sponsor_modal_del">
             Delete Sponsor
         </button>
         <br>
@@ -95,37 +107,47 @@
                     </div>
                     <div class="modal-body">
                         <form method="post" action="/332demo/sponsor/sponsorTransaction.php">
-                            <label id="first"> Company name:</label><br>
-                            <select name="company_name">
-                                <?php 
-                                    // Default ALL option
-                                    echo "<option selected='selected' value='*'>All Companies</option>\n";
-                                    foreach ($companies as $company) {
-                                        echo "<option value='${company['company_name']}'> ${company['company_name']} </option>\n";
-                                    }
-                                ?>
-                            </select>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Company name</span>
+                                </div>
+                                <select name="company_name" class="custom-select">
+                                    <?php 
+                                        // Default ALL option
+                                        echo "<option selected='selected' value='*'>All Companies</option>\n";
+                                        foreach ($companies as $company) {
+                                            echo "<option value='${company['company_name']}'> ${company['company_name']} </option>\n";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            
                             <input type="hidden" name="transaction_type" value='del'>
-                            <button type="submit" name="selection">Delete</button>
+                            <button type="submit" name="selection" class="btn btn-danger">delete</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        Sort Sponsorship by Company: 
+        <h3 style="margin-top: 20px;">Sponsorships</h3>
         <!-- Drop down menu to filter companies -->
         <form method="post" action="/332demo/sponsor/sponsor.php">
-            <select name="selected_company" onchange="this.form.submit()">
-                <?php 
-                    // Default ALL option
-                    echo "<option selected='selected' value='*'>All Companies</option>\n";
-                    foreach ($companies as $company) {
-                        $is_selected = ($selected_company==$company['company_name']) ? "selected='selected' " : "";
-                        echo "<option ".$is_selected."value='${company['company_name']}'> ${company['company_name']} </option>\n";
-                    }
-                ?>
-            </select>
+            <div class="input-group mb-3" style="width: 480px;">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Sort sponsorship by company</span>
+                </div>
+                <select name="selected_company" onchange="this.form.submit()" class="custom-select">
+                    <?php 
+                        // Default ALL option
+                        echo "<option selected='selected' value='*'>All Companies</option>\n";
+                        foreach ($companies as $company) {
+                            $is_selected = ($selected_company==$company['company_name']) ? "selected='selected' " : "";
+                            echo "<option ".$is_selected."value='${company['company_name']}'> ${company['company_name']} </option>\n";
+                        }
+                    ?>
+                </select>
+            </div> 
         </form>
 
         <?php 
@@ -155,17 +177,23 @@
         <h3>Job Listings</h3>
         <!-- Drop down menu to filter companies -->
         <form method="post" action="/332demo/sponsor/sponsor.php">
-            <select name="sel_job_comp" onchange="this.form.submit()">
-                <?php 
-                    $companies = $db_handle->runQuery("SELECT company_name FROM advertisement;");
-                    // Default ALL option
-                    echo "<option selected='selected' value='*'>All Companies</option>\n";
-                    foreach ($companies as $company) {
-                        $is_selected = ($sel_job_comp==$company['company_name']) ? "selected='selected' " : "";
-                        echo "<option ".$is_selected."value='${company['company_name']}'> ${company['company_name']} </option>\n";
-                    }
-                ?>
-            </select>
+            <div class="input-group mb-3" style="width: 480px;">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Sort jobs by company</span>
+                </div>
+                <select name="sel_job_comp" onchange="this.form.submit()" class="custom-select">
+                    <?php 
+                        $companies = $db_handle->runQuery("SELECT company_name FROM advertisement;");
+                        // Default ALL option
+                        echo "<option selected='selected' value='*'>All Companies</option>\n";
+                        foreach ($companies as $company) {
+                            $is_selected = ($sel_job_comp==$company['company_name']) ? "selected='selected' " : "";
+                            echo "<option ".$is_selected."value='${company['company_name']}'> ${company['company_name']} </option>\n";
+                        }
+                    ?>
+                </select>
+            </div> 
+            
         </form>
 
         <!-- Display a table of job listings -->

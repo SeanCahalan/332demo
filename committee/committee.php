@@ -39,8 +39,11 @@
 
 
 <form method="POST" action="/332demo/committee/committee.php" name="search">
-    <div class="search-box">
-        <select id="Place" name="subcommittee" onchange="this.form.submit()">
+    <div class="input-group mb-3" style="width: 280px;">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Select subcommittee</span>
+        </div>
+        <select id="Place" name="subcommittee" onchange="this.form.submit()" class="custom-select">
             <option <?php if($selection=='all'){?>selected="selected"<?php }?> value="all">All</option>
             <?php
                 if (! empty($names)) {
@@ -54,8 +57,7 @@
                 }
             ?>
         </select>
-    </div>
-  
+    </div> 
 </form>
 
 <?php

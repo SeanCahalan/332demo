@@ -46,16 +46,18 @@
 
         ?>
 
-        <table>
-            <tr>
+        <table class="table table-bordered table-hover">
+            <tr class="table-secondary">
                 <td style="text-align: center;" colspan="4">Attendance</td>
             </tr>
+            
             <tr>
                 <td>Attendee type</td>
                 <td>Ticket cost</td>
                 <td>Number of attendees</td>
                 <td>Total amount</td>
             </tr>
+
             <tr>
                 <td>Student</td>
                 <td>50</td>
@@ -73,7 +75,7 @@
                 <td><?php echo $attendanceSum; ?></td>
             </tr>
 
-            <tr>
+            <tr class="table-secondary">
                 <td style="text-align: center;" colspan="4">Sponsorship</td>
             </tr>
 

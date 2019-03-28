@@ -1,22 +1,26 @@
 <?php 
     function printScheduleTable($values){
         $headers = ['Event Name', 'Room Number', 'Start Time', 'End Time', ' '];
-        echo "<table style='border: solid 1px black;'>";
+        echo '<table class="table table-bordered table-hover">';
+
+        echo '<thead class="thead-dark">';
+        echo "<tr>";
         foreach($headers as $header){
             echo "<th>$header</th>";
         }
         echo "</tr>";
+        echo "</thead>";
 
         foreach ($values as $row) {
             echo "<tr>";
             foreach ($row as $stmt){
-                echo '<td style="width:150px;border:1px solid black;">'.$stmt."</td>";
+                echo '<td>'.$stmt."</td>";
             }
             $room = $row['room'];
             $startTime = $row['start_time'];
             $endTime = $row['end_time'];
             $functionCall = "editSchedule(". $room .", '" . $startTime."', '". $endTime ."')";
-            echo '<td>'.'<button id="edit" type="button" class="btn btn-primary" onclick="'.$functionCall.'">Edit</button>'."</td>";
+            echo '<td>'.'<button id="edit" type="button" class="btn btn-outline-warning" onclick="'.$functionCall.'">Edit</button>'."</td>";
             echo "</tr>";
         }
 

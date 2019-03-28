@@ -50,21 +50,28 @@
         ?>
 
         <form method="post" action="/332demo/schedule/schedule.php">
-            <select name="sort" onchange="this.form.submit()">
-                <option <?php if ($sort == 'all') { ?>selected="selected" <?php 
-                                                                        } ?> value="all">All</option>
-                <?php
-                foreach ($result as $row) {
-                    //echo '<option value="'.$row['day'].'">'.$row['day'].'</option>';
-                    $option = '<option ';
-                    if ($sort == $row['day']) {
-                        $option .= 'selected="selected" ';
+            <div class="input-group mb-3" style="width: 280px;">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Select day</span>
+                </div>
+                <select name="sort" onchange="this.form.submit()" class="custom-select">
+                    <option <?php if ($sort == 'all') { ?>selected="selected" <?php 
+                                                                            } ?> value="all">All</option>
+                    <?php
+                    foreach ($result as $row) {
+                        //echo '<option value="'.$row['day'].'">'.$row['day'].'</option>';
+                        $option = '<option ';
+                        if ($sort == $row['day']) {
+                            $option .= 'selected="selected" ';
+                        }
+                        $option .= 'value="' . $row['day'] . '">' . $row['day'] . '</option>';
+                        echo $option;
                     }
-                    $option .= 'value="' . $row['day'] . '">' . $row['day'] . '</option>';
-                    echo $option;
-                }
-                ?>
-            </select>
+                    ?>
+                </select>
+            </div> 
+
+            
         </form>
 
         <div class="modal fade" id="edit_schedule" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -79,7 +86,7 @@
                     <div class="modal-body">
                         <form method="post" action="/332demo/schedule/editSchedule.php">
                             <div id="edit_schedule_form"></div>
-                            <button type="submit" name="save">save</button>
+                            <button type="submit" name="save" class="btn btn-primary">save</button>
                         </form>
                     </div>
                 </div>
