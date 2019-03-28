@@ -79,7 +79,6 @@
                     <div class="modal-body">
                         <form method="post" action="/332demo/schedule/editSchedule.php">
                             <div id="edit_schedule_form"></div>
-
                             <button type="submit" name="save">save</button>
                         </form>
                     </div>
@@ -91,7 +90,7 @@
         require_once('../schedule/PrintScheduleTable.php');
         if ($sort == "all") {
             try {
-                $sql = "SELECT name, room, start_time, end_time FROM session";
+                $sql = "SELECT name, room, start_time, end_time FROM session ORDER BY start_time";
                 $result = $db_handle->runQuery($sql);
                 printScheduleTable($result);
             } catch (PDOException $e) {
@@ -99,7 +98,7 @@
             }
         } else {
             try {
-                $sql = "SELECT name, room, start_time, end_time FROM session WHERE cast(start_time as date) = '" . $sort . "'";
+                $sql = "SELECT name, room, start_time, end_time FROM session WHERE cast(start_time as date) = '" . $sort . "' ORDER BY start_time";
                 $result = $db_handle->runQuery($sql);
                 printScheduleTable($result);
             } catch (PDOException $e) {
