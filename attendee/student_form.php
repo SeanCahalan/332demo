@@ -6,7 +6,8 @@
         include '../util/DBController.php';
         $db_handle = new DBController();
 
-        $rooms = $db_handle->runQuery("SELECT room_number FROM hotel_rooms WHERE hotel_rooms.beds < 4");
+        $rooms = $db_handle->runQuery("SELECT room_number FROM hotel_rooms 
+            WHERE hotel_rooms.beds * 2 > hotel_rooms.occupants");
         foreach($rooms as $room){
             echo "<option>";
             echo $room["room_number"];

@@ -50,6 +50,7 @@
     
 ?>
 
+<p>Sort attendees by type:</p>
 <form method="post" action="/332demo/attendee/attendee.php">
     <select name="sort" onchange="this.form.submit()">
         <option <?php if($sort=='all'){?>selected="selected"<?php }?> value="all">All</option>
@@ -61,11 +62,12 @@
 
 <?php if($sort == "student"){ 
 ?>
+    <p>Sort students by hotel room:</p>
     <form method="post" action="/332demo/attendee/attendee.php?sort=student">
         <select name="room" onchange="this.form.submit()">
             <option <?php if(! is_numeric($room)){?>selected="selected"<?php }?> value="all">All</option>
             <?php 
-                $rooms = $db_handle->runQuery("SELECT room_number FROM hotel_rooms WHERE hotel_rooms.beds < 4");
+                $rooms = $db_handle->runQuery("SELECT room_number FROM hotel_rooms");
                 foreach($rooms as $number){
                     if($room==$number["room_number"]){
                         echo '<option selected="selected" value="'.$number["room_number"].'">';
@@ -159,9 +161,10 @@
         }
     } elseif($sort == "sponsor"){
         try {
-            $sql = "SELECT id, fname, lname FROM attendee WHERE id in (SELECT id from sponsor)";
+            $sql = "SELECT a.id, fname, lname, company_name FROM attendee a
+                INNER JOIN sponsor s ON a.id = s.id";
             $result = $db_handle->runQuery($sql);
-            printTable(['ID', 'First name', 'Last name'], $result);
+            printTable(['ID', 'First name', 'Last name', 'Company'], $result);
         }
         catch(PDOException $e) {
             echo "Error: " . $e->getMessage();

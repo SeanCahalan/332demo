@@ -1,12 +1,14 @@
+USE conference;
+
 INSERT INTO hotel_rooms VALUES
-(100, 3), 
-(101, 4), 
-(404, 1);
+(100, 2, 1), 
+(101, 2, 1), 
+(404, 1, 0);
 
 INSERT INTO attendee (fname, lname, price) VALUES 
-('chris', 'lai', 499), 
-('sean', 'cahalen', 300), 
-('james', 'ford', 0);
+('Chris', 'Lai', 50), 
+('Sean', 'Cahalan', 50), 
+('James', 'Ford', 50);
 
 INSERT INTO student VALUES
 (1, 100),
@@ -14,9 +16,9 @@ INSERT INTO student VALUES
 (3, NULL);
 
 INSERT INTO attendee (fname, lname, price) VALUES 
-('Paul', 'Sunders', 800), 
-('Maria', 'Lee', 600), 
-('Greg', 'Munn', 40);
+('Paul', 'Sunders', 100), 
+('Maria', 'Lee', 100), 
+('Greg', 'Munn', 100);
 
 INSERT INTO professional VALUES
 (4),
@@ -46,20 +48,28 @@ INSERT INTO sponsor VALUES
 (9, 'Google');
 
 INSERT INTO committee_members (fname, lname) VALUES 
-('chris', 'lai'), 
-('sean', 'cahalen'), 
-('erik', 'karlson'), 
-('james', 'ford');
+('Chris', 'Lai'), 
+('Sean', 'Cahalan'), 
+('Erik', 'Karlson'), 
+('James', 'Ford'),
+('John', 'Doe'),
+('Emma', 'Johnson'),
+('Janice', 'Davids');
 
 INSERT INTO subcommittees (name, chair) VALUES
-('Program Committee', 1), 
-('Registration Committee', 3);
+('Program Committee', 1),
+('Registration Committee', 3),
+('Sponsor Committee', 2);
 
 INSERT INTO is_committee_member_of (id, name) VALUES
 (1, 'Program Committee'), 
 (2, 'Program Committee'),
 (3, 'Registration Committee'),
-(4, 'Registration Committee');
+(4, 'Registration Committee'),
+(5, 'Sponsor Committee'),
+(6, 'Sponsor Committee'),
+(7, 'Registration Committee'),
+(1, 'Sponsor Committee');
 
 INSERT INTO session VALUES
 ("Getting Started", 101, "2018-03-20 08:00:00", "2018-03-20 11:00:00"),

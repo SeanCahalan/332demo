@@ -51,7 +51,7 @@ try {
             $stmt->execute();
             if(is_numeric($room)){
                 $stmt = $conn->prepare("UPDATE hotel_rooms
-                    SET beds = beds + 1
+                    SET occupants = occupants + 1
                     WHERE room_number = $room");
                 $stmt->execute();
             }

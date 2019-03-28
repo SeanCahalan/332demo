@@ -36,6 +36,7 @@ CREATE TABLE `attendee` (
 CREATE TABLE `hotel_rooms` (
 	`room_number` INT NOT NULL,
 	`beds` INT,
+	`occupants` INT,
 	PRIMARY KEY (`room_number`)
 );
 
