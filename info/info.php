@@ -39,7 +39,8 @@
 
             $sponsorships = $db_handle->runQuery("SELECT st.class, cost, COUNT(st.class), SUM(cost)
                 FROM sponsor_company sc INNER JOIN sponsor_type st ON sc.class = st.class
-                GROUP BY st.class");
+                GROUP BY st.class
+                ORDER BY cost");
             $sponsorSum = $db_handle->runQuery("SELECT SUM(cost) as sum
                 FROM sponsor_company sc 
                 INNER JOIN sponsor_type st ON sc.class = st.class")[0]['sum'];
@@ -82,7 +83,7 @@
 
             <tr>
                 <td>Sponsor type</td>
-                <td>Price</td>
+                <td>Cost</td>
                 <td>Number of sponsorships</td>
                 <td>Total amount</td>
             </tr>

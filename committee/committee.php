@@ -39,7 +39,7 @@
 
 
 <form method="POST" action="/332demo/committee/committee.php" name="search">
-    <div class="input-group mb-3" style="width: 280px;">
+    <div class="input-group mb-3" style="width: 400px;">
         <div class="input-group-prepend">
             <span class="input-group-text">Select subcommittee</span>
         </div>

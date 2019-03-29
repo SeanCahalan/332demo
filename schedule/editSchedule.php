@@ -55,19 +55,26 @@
             $stmt->execute();
             //echo $stmt->debugDumpParams();
             $conn->commit();
+
+            echo '<div class="alert alert-success">';
+            echo "Schedule updated successfully. ";
+            echo '<a href="/332demo/schedule/schedule.php"> View schedule </a>';
+            echo '</div>';
+
         } catch (Exception $e) {
             $conn->rollback();
-            throw $e;
+            echo '<div class="alert alert-danger">';
+            echo "Error: " . $e->getMessage();
+            echo "</div>";
+            // throw $e;
         }
 
-        echo "Schedule updated successfully. ";
+        
 
         ?>
     </div>
 
-    <div>
-        <a href="/332demo/schedule/schedule.php"> View schedule </a>
-    </div>
+
 
 </div>
 </body>

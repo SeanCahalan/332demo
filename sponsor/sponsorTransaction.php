@@ -47,6 +47,9 @@
 
             $transaction_type = $_POST["transaction_type"];
             $company_name = $_POST["company_name"];
+            if($company_name == '') {
+                $company_name = NULL;
+            }
 
             // Check if the company already exists
             $stmt = $conn->prepare("SELECT * FROM sponsor_company WHERE company_name=:company_name");
@@ -91,21 +94,25 @@
                 $conn->rollback();
                 throw $e;
             }
+
+            echo '<div class="alert alert-success">';
             if ($transaction_type === 'add') {
-                echo $company_name . " was added successfully."; 
+                echo $company_name . " was added successfully. "; 
             } else if ($transaction_type === 'del') {
-                echo $company_name . " was deleted successfully."; 
+                echo $company_name . " was deleted successfully. "; 
             }
+            echo '<a href="/332demo/sponsor/sponsor.php">Return to Sponsor table</a>';
+            echo '</div>';
+           
         }
         catch(Exception $e)
         {
+            echo '<div class="alert alert-danger">';
             echo "Error: " . $e->getMessage();
+            echo "</div>";
         }
         $conn = null;
         ?>
-        <div><a href="/332demo/sponsor/sponsor.php" >
-            "Return to Sponsor table"
-        </a></div>
 
     </div> <!-- End Content -->
 

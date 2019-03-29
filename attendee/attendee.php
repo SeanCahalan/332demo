@@ -169,6 +169,7 @@
             if(is_numeric($room)){
                 $sql = $sql . " WHERE student.room_number = " . $room;
             }
+            $sql = $sql . " ORDER BY attendee.id";
             $result = $db_handle->runQuery($sql);
             printTable(['ID', 'First name', 'Last name', '<a>Room number</a>'], $result);
         }
@@ -187,7 +188,8 @@
     } elseif($sort == "sponsor"){
         try {
             $sql = "SELECT a.id, fname, lname, company_name FROM attendee a
-                INNER JOIN sponsor s ON a.id = s.id";
+                INNER JOIN sponsor s ON a.id = s.id
+                ORDER BY a.id";
             $result = $db_handle->runQuery($sql);
             printTable(['ID', 'First name', 'Last name', 'Company'], $result);
         }

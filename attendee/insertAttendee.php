@@ -57,6 +57,9 @@ try {
     $fname = $_POST["fname"];
     $lname = $_POST["lname"];
 
+    if($fname == '') $fname = NULL;
+    if($lname == '') $lname = NULL;
+
     try{
         $conn->beginTransaction();
         $stmt = $conn->prepare("INSERT INTO attendee (fname, lname, price) 
@@ -95,19 +98,24 @@ try {
         throw $e;
     }
 
+    echo '<div class="alert alert-success">';
     echo "New records created successfully. ";
     echo $_POST['fname'] . " was added."; 
+    echo '<a href="/332demo/attendee/attendee.php?sort=' . $attendeeType . '">';
+    echo " View " . $attendeeType . " table</a>";
+    echo '</div>';
     
 }
 catch(PDOException $e)
 {
+    echo '<div class="alert alert-danger">';
     echo "Error: " . $e->getMessage();
+    echo "</div>";
 }
 $conn = null;
 ?>
-<div><a <?php echo 'href="/332demo/attendee/attendee.php?sort=' . $attendeeType .'"'; ?> >
-    <?php echo "View " . $attendeeType . " table" ?>
-</a></div>
+
+
 
 </div>
 </body>

@@ -72,9 +72,9 @@ INSERT INTO is_committee_member_of (id, name) VALUES
 (1, 'Sponsor Committee');
 
 INSERT INTO session VALUES
-("Getting Started", 101, "2018-03-20 08:00:00", "2018-03-20 11:00:00"),
-("Losing Hope", 201, "2018-03-20 12:00:00", "2018-03-20 16:00:00"),
-("Finishing the Job", 101, "2018-03-20 17:00:00", "2018-03-20 19:30:00");
+("Getting Started", 101, "2019-06-18 08:00:00", "2019-06-18 11:00:00"),
+("Losing Hope", 201, "2019-06-18 12:00:00", "2019-06-18 16:00:00"),
+("Finishing the Job", 101, "2019-06-18 17:00:00", "2019-06-18 19:30:00");
 
 INSERT INTO session (name, room, start_time, end_time) VALUES
 ('Neural Nets', 1,'2019-06-18 10:30:00 AM','2019-06-18 11:30:00 AM'),

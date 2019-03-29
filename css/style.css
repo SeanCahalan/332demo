@@ -66,3 +66,7 @@ tbody{
     border: 1px solid black;
     padding: 5px;
 } */
+
+.alert {
+    margin-top: 15px;
+}
