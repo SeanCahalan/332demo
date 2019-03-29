@@ -103,7 +103,10 @@
                 <td></td><td></td><td></td>
                 <td><?php echo $sponsorSum; ?></td>
             </tr>
-            
+            <tr>
+                <td colspan="3">Total Intake</td>
+                <td class="table-success"><?php echo ($sponsorSum + $attendanceSum) ?></td>
+            </tr>
         </table>
 
 
